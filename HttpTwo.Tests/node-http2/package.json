@@ -7,11 +7,11 @@
     "node": ">=0.12.0"
   },
   "devDependencies": {
-    "istanbul": "*",
+    "bunyan": "^1.8.12",
     "chai": "*",
-    "mocha": "*",
     "docco": "*",
-    "bunyan": "*"
+    "istanbul": "*",
+    "mocha": "*"
   },
   "scripts": {
     "test": "istanbul test _mocha -- --reporter spec --slow 500 --timeout 15000",
@@ -43,7 +43,5 @@
   ],
   "license": "MIT",
   "readmeFilename": "README.md",
-  "dependencies": {
-    "bunyan": "^1.5.1"
-  }
+  "dependencies": {}
 }

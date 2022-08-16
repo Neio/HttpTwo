@@ -46,7 +46,8 @@ namespace HttpTwo.Tests
 
             var data = await http.GetStringAsync ("http://localhost:8999/index.html");
 
-            Assert.IsNotNullOrEmpty (data);
+            Assert.IsNotNull (data);
+            Assert.IsNotEmpty(data);
             Assert.IsTrue (data.Contains ("Hello World"));
         }
 
@@ -58,7 +59,8 @@ namespace HttpTwo.Tests
 
             var data = await http.GetStringAsync ("https://localhost:8999/index.html");
 
-            Assert.IsNotNullOrEmpty (data);
+            Assert.IsNotNull (data);
+            Assert.IsNotEmpty(data);
             Assert.IsTrue (data.Contains ("Hello World"));
         }
 
@@ -71,7 +73,8 @@ namespace HttpTwo.Tests
             for (int i = 0; i < 3; i++) {
                 var data = await http.GetStringAsync ("http://localhost:8999/index.html");
 
-                Assert.IsNotNullOrEmpty (data);
+                Assert.IsNotNull (data);
+                Assert.IsNotEmpty(data);
                 Assert.IsTrue (data.Contains ("Hello World"));
             }
         }
@@ -124,7 +127,8 @@ namespace HttpTwo.Tests
 
             var data = System.Text.Encoding.ASCII.GetString (response.Body);
 
-            Assert.IsNotNullOrEmpty (data);
+            Assert.IsNotNull (data);
+            Assert.IsNotEmpty(data);
             Assert.IsTrue (data.Contains ("Hello World"));
         }
 

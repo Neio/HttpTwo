@@ -52,7 +52,7 @@ jobs:
         with:
           name: TestBinaries
           path: HttpTwo.Tests
-          
+
       - name: Install dependencies
         working-directory: ./HttpTwo.Tests/node-http2
         run: npm install
@@ -71,5 +71,5 @@ jobs:
         if: success() || failure()        # run this step even if previous step failed
         with:
           name: Test Result
-          path: coverage/*.trx
+          path: HttpTwo.Tests/coverage/*.trx
           reporter: dotnet-trx

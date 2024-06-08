@@ -46,14 +46,14 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-            dotnet-version: 8.*
+            dotnet-version: 6.*
 
       - uses: actions/download-artifact@v4
         with:
           name: TestBinaries
 
       - name: Install dependencies
-        working-directory: ./HttpWwo.Tests/node-http2
+        working-directory: ./HttpTwo.Tests/node-http2
         run: npm install
 
       - name: Unit Test (.NET 6.0)
@@ -62,8 +62,8 @@ jobs:
 
       - name: Unit Test (.NET Framework 4.6.2)
         if: ${{ !cancelled() }}
-        run: dotnet test --verbosity normal --logger "trx;LogFileName=net462.trx" --results-directory coverage bin/Release/neet462/HttpTwo.Tests.dll
-        
+        run: dotnet test --verbosity normal --logger "trx;LogFileName=net462.trx" --results-directory coverage bin/Release/net462/HttpTwo.Tests.dll
+
       - uses: dorny/test-reporter@v1
         if: success() || failure()        # run this step even if previous step failed
         with:

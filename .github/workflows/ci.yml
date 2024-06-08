@@ -51,7 +51,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: TestBinaries
-          path: HttpTwo.Tests/**/bin/*
+          path: HttpTwo.Tests
+          
       - name: Install dependencies
         working-directory: ./HttpTwo.Tests/node-http2
         run: npm install
@@ -60,7 +61,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: dotnet test --verbosity normal --logger "trx;LogFileName=net6.trx" --results-directory coverage bin/Release/net6.0/HttpTwo.Tests.dll
         working-directory: ./HttpTwo.Tests
-        
+
       - name: Unit Test (.NET Framework 4.6.2)
         if: ${{ !cancelled() }}
         run: dotnet test --verbosity normal --logger "trx;LogFileName=net462.trx" --results-directory coverage bin/Release/net462/HttpTwo.Tests.dll

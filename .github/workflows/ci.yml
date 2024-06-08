@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+    - github-workflow
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout latest
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.*
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Upload Artificats
+      uses: actions/upload-artifact@v4
+      with:
+        name: TestBinaries
+        path: HttpTwo.Tests/**/bin/*
+  
+  UnitTest:
+    name: Run Unit Tests
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout latest
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+            dotnet-version: 6.*
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: TestBinaries
+          path: HttpTwo.Tests
+
+      - name: Install dependencies
+        working-directory: ./HttpTwo.Tests/node-http2
+        run: npm install
+
+      - name: Unit Test (.NET 6.0)
+        if: ${{ !cancelled() }}
+        run: dotnet test --verbosity normal --logger "trx;LogFileName=net6.trx" --results-directory coverage bin/Release/net6.0/HttpTwo.Tests.dll
+        working-directory: ./HttpTwo.Tests
+
+      - name: Unit Test (.NET Framework 4.6.2)
+        if: ${{ !cancelled() }}
+        run: dotnet test --verbosity normal --logger "trx;LogFileName=net462.trx" --results-directory coverage bin/Release/net462/HttpTwo.Tests.dll
+        working-directory: ./HttpTwo.Tests
+
+      - uses: dorny/test-reporter@v1
+        if: success() || failure()        # run this step even if previous step failed
+        with:
+          name: Test Result
+          path: HttpTwo.Tests/coverage/*.trx
+          reporter: dotnet-trx

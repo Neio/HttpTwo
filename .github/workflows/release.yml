@@ -1,0 +1,31 @@
+name: Release to NuGet
+
+on:
+  release:
+    types: [published]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Checkout latest
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.*
+
+    - name: Version Output
+      run: echo ${{ github.event.release.tag_name }} # Output: 1.1.2
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Generate package
+      run: dotnet pack --no-build -c Release -o out /p:Version=${{ github.event.release.tag_name }}
+    
+    - name: Publish
+      run: dotnet nuget push ./out/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate 
+  

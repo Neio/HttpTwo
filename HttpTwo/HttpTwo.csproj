@@ -8,6 +8,7 @@
     <RootNamespace>HttpTwo</RootNamespace>
     <AssemblyName>HttpTwo</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageId>HttpTwo.Net</PackageId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

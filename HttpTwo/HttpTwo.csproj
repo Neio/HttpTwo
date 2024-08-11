@@ -9,6 +9,8 @@
     <AssemblyName>HttpTwo</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageId>HttpTwo.Net</PackageId>
+    <PackageProjectUrl>https://github.com/Neio/HttpTwo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Neio/HttpTwo</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
